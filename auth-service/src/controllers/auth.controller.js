@@ -4,13 +4,12 @@ import generateTokens from "../utils/generateToken.js";
 import logger from "../utils/logger.js";
 import { validateRegistration, validatelogin } from "../utils/validation.js";
 
-
 //user registration
 const resgiterUser = async (req, res) => {
   logger.info("Registration endpoint hit...");
   try {
     //validate the schema
-    const { error } = validateRegistration(req.body);
+    const { error } = validateRegistration(req.body); //we would be getting our info. in request body
     if (error) {
       logger.warn("Validation error", error.details[0].message);
       return res.status(400).json({
@@ -20,7 +19,8 @@ const resgiterUser = async (req, res) => {
     }
     const { email, password, username } = req.body;
 
-    let user = await User.findOne({ $or: [{ email }, { username }] });
+    let user = await User.findOne({ $or: [{ email }, { username }] }); //we are using or operator to chk if the user is existting or not
+    // if eihter of username or email is prsnt then the user is not allowed to register again
     if (user) {
       logger.warn("User already exists");
       return res.status(400).json({
@@ -114,8 +114,8 @@ const refreshTokenUser = async (req, res) => {
 
     const storedToken = await RefreshToken.findOne({ token: refreshToken });
 
-    const storedToken = await RefreshToken.deleteOne({ token: refreshToken });
-    
+    // const storedToken = await RefreshToken.deleteOne({ token: refreshToken });
+
     if (!storedToken) {
       logger.warn("Invalid refresh token provided");
       return res.status(400).json({
@@ -177,7 +177,7 @@ const logoutUser = async (req, res) => {
       });
     }
 
-   const storedToken = await RefreshToken.findOneAndDelete({
+    const storedToken = await RefreshToken.findOneAndDelete({
       token: refreshToken,
     });
     if (!storedToken) {
@@ -202,4 +202,4 @@ const logoutUser = async (req, res) => {
   }
 };
 
-module.exports = { resgiterUser, loginUser, refreshTokenUser, logoutUser };
+export { resgiterUser, loginUser, refreshTokenUser, logoutUser };
