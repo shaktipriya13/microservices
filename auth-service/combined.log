@@ -52,3 +52,19 @@
 {"level":"warn","message":"User already exists","service":"Auth-service","timestamp":"2025-09-03T12:06:25.382Z"}
 {"level":"info","message":"Auth service running on port 3001","service":"Auth-service","timestamp":"2025-09-03T12:07:32.432Z"}
 {"level":"info","message":"Connected to mongodb","service":"Auth-service","timestamp":"2025-09-03T12:07:33.575Z"}
+{"level":"info","message":"Auth service running on port 3001","service":"Auth-service","timestamp":"2025-09-03T13:10:24.472Z"}
+{"level":"info","message":"Connected to mongodb","service":"Auth-service","timestamp":"2025-09-03T13:10:25.725Z"}
+{"level":"info","message":"Auth service running on port 3001","service":"Auth-service","timestamp":"2025-09-03T13:10:50.301Z"}
+{"level":"info","message":"Connected to mongodb","service":"Auth-service","timestamp":"2025-09-03T13:10:51.429Z"}
+{"level":"info","message":"Auth service running on port 3001","service":"Auth-service","timestamp":"2025-09-03T13:11:03.358Z"}
+{"level":"info","message":"Connected to mongodb","service":"Auth-service","timestamp":"2025-09-03T13:11:04.228Z"}
+{"level":"info","message":"Auth service running on port 3001","service":"Auth-service","timestamp":"2025-09-03T13:13:44.019Z"}
+{"level":"info","message":"Connected to mongodb","service":"Auth-service","timestamp":"2025-09-03T13:13:45.305Z"}
+{"level":"info","message":"Received POST request to /api/auth/register","service":"Auth-service","timestamp":"2025-09-03T13:14:06.664Z"}
+{"level":"info","message":"Request body, [object Object]","service":"Auth-service","timestamp":"2025-09-03T13:14:06.665Z"}
+{"level":"info","message":"Registration endpoint hit...","service":"Auth-service","timestamp":"2025-09-03T13:14:06.679Z"}
+{"level":"info","message":"User saved successfully: 68b83f1e36c308f37caf7898","service":"Auth-service","timestamp":"2025-09-03T13:14:07.018Z"}
+{"level":"info","message":"Auth service running on port 3001","service":"Auth-service","timestamp":"2025-09-03T13:35:06.261Z"}
+{"level":"info","message":"Connected to mongodb","service":"Auth-service","timestamp":"2025-09-03T13:35:07.466Z"}
+{"level":"info","message":"Auth service running on port 3001","service":"Auth-service","timestamp":"2025-09-03T13:35:10.965Z"}
+{"level":"info","message":"Connected to mongodb","service":"Auth-service","timestamp":"2025-09-03T13:35:12.072Z"}

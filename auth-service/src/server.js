@@ -1,3 +1,5 @@
+// we have set up 50 requests/15 minutes for redis caching
+
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import logger from "./utils/logger.js";
