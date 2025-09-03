@@ -12,16 +12,16 @@ const generateTokens = async (user) => {
     { expiresIn: "60m" }
   );
 
-  const refreshToken = crypto.ranadomBytes(40).toString("hex");
+  const refreshToken = crypto.randomBytes(40).toString("hex");
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + 7); //This part is like a sticky note you put on your new key. It says, "This key will stop working in exactly one week."
 
   await refreshToken.create({
-        token:refreshToken,
-        user:user_id,
-        expiresAt
-  })
-  return {accessToken,refreshToken};
+    token: refreshToken,
+    user: user_id,
+    expiresAt,
+  });
+  return { accessToken, refreshToken };
 };
 
-export {generateTokens};
+export { generateTokens };

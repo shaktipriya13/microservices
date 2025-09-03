@@ -1,26 +1,27 @@
 // this implements a logging feature
 
-// This code sets up a logging utility using the Winston library, a popular logging framework for Node.js. The file creates a logger instance that logs messages to the console and two files (error.log and combined.log) with different configurations based on the environment (e.g., production or development). The logger is designed for an "identity-service" and supports structured logging with timestamps, error stacks, and JSON formatting.
+// This code sets up a logging utility using the Winston library, a popular logging framework for Node.js. The file creates a logger instance that logs messages to the console and two files (error.log and combined.log) with different configurations based on the environment (e.g., production or development). The logger is designed for an "auth-service" and supports structured logging with timestamps, error stacks, and JSON formatting.
 
-import winston from 'winston';
+import winston from "winston";
 
 const logger = winston.createLogger({
   level: process.env.NODE_ENV === "production" ? "info" : "debug",
-//   Adjusts verbosity (info vs. debug) based on the environment, ensuring detailed logs during development and concise logs in production
+  //   Adjusts verbosity (info vs. debug) based on the environment, ensuring detailed logs during development and concise logs in production
 
-// Winston’s log levels (in increasing severity): silly, debug, verbose, info, warn, error.
-// This ensures detailed logging during development but reduces noise in production.
+  // Winston’s log levels (in increasing severity): silly, debug, verbose, info, warn, error.
+  // This ensures detailed logging during development but reduces noise in production.
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
     winston.format.splat(),
     winston.format.json()
   ),
-  defaultMeta: { service: "identity-service" },
+  defaultMeta: { service: "Auth-service" },
   //   this is meta data
-//   Specifies where logs are sent using Winston’s transports. A transport is a destination for log messages
+  //   Specifies where logs are sent using Winston’s transports. A transport is a destination for log messages
   transports: [
-    new winston.transports.Console({//it means we want all our logs in the console
+    new winston.transports.Console({
+      //it means we want all our logs in the console
       format: winston.format.combine(
         winston.format.colorize(),
         winston.format.simple()

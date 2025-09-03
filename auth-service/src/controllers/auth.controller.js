@@ -1,11 +1,11 @@
 import RefreshToken from "../models/RefreshToken.js";
 import User from "../models/User.js";
-import generateTokens from "../utils/generateToken.js";
+import { generateTokens } from "../utils/generateToken.js";
 import logger from "../utils/logger.js";
 import { validateRegistration, validatelogin } from "../utils/validation.js";
 
 //user registration
-const resgiterUser = async (req, res) => {
+const registerUser = async (req, res) => {
   logger.info("Registration endpoint hit...");
   try {
     //validate the schema
@@ -202,4 +202,4 @@ const logoutUser = async (req, res) => {
   }
 };
 
-export { resgiterUser, loginUser, refreshTokenUser, logoutUser };
+export { registerUser, loginUser, refreshTokenUser, logoutUser };

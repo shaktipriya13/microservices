@@ -1,22 +1,24 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-const logger = require("./utils/logger");
-const express = require("express");
-const helmet = require("helmet");
-const cors = require("cors");
-const { RateLimiterRedis } = require("rate-limiter-flexible");
-const Redis = require("ioredis");
-const { rateLimit } = require("express-rate-limit");
-const { RedisStore } = require("rate-limit-redis");
-const routes = require("./routes/identity-service");
-const errorHandler = require("./middleware/errorHandler");
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import logger from "./utils/logger.js";
+import express from "express";
+import helmet from "helmet";
+import cors from "cors";
+import { RateLimiterRedis } from "rate-limiter-flexible";
+import Redis from "ioredis";
+import { rateLimit } from "express-rate-limit";
+import { RedisStore } from "rate-limit-redis";
+import { router } from "./routes/auth.route.js";
+import errorHandler from "./middlewares/errorHandler.js";
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 //connect to mongodb
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGO_URI)
   .then(() => logger.info("Connected to mongodb"))
   .catch((e) => logger.error("Mongo connection error", e));
 
@@ -66,25 +68,6 @@ app.use((req, res, next) => {
 //   }),
 // });
 
-// //apply this sensitiveEndpointsLimiter to our routes
-// app.use("/api/auth/register", sensitiveEndpointsLimiter);
-
-// //Routes
-// app.use("/api/auth", routes);
-
-// //error handler
-// app.use(errorHandler);
-
-// app.listen(PORT, () => {
-//   logger.info(`Identity service running on port ${PORT}`);
-// });
-
-// //unhandled promise rejection
-
-// process.on("unhandledRejection", (reason, promise) => {
-//   logger.error("Unhandled Rejection at", promise, "reason:", reason);
-// });
-
 // DDos proteciton and rate-liminting implemented here
 const rateLimiter = new RateLimiterRedis({
   storeClient: redisClient,
@@ -104,12 +87,12 @@ app.use((req, res, next) => {
     });
 });
 
-
 // Ip based rate limiting for sensetive endpoints
 const sensitiveEndpointsLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 50,
   standardHeaders: true,
+  //   This enables standard HTTP headers to provide information about the rate limit to the client.
   legacyHeaders: false,
   handler: (req, res) => {
     logger.warn(`Sensitive endpoint rate limit exceeded for IP: ${req.ip}`);
@@ -118,4 +101,23 @@ const sensitiveEndpointsLimiter = rateLimit({
   store: new RedisStore({
     sendCommand: (...args) => redisClient.call(...args),
   }),
-});This enables standard HTTP headers to provide information about the rate limit to the client. 
+});
+
+//apply this sensitiveEndpointsLimiter to our routes
+app.use("/api/auth/register", sensitiveEndpointsLimiter);
+
+//Routes
+app.use("/api/auth", router);
+
+//error handler
+app.use(errorHandler);
+
+app.listen(PORT, () => {
+  logger.info(`Auth service running on port ${PORT}`);
+});
+
+//unhandled promise rejection
+
+process.on("unhandledRejection", (reason, promise) => {
+  logger.error("Unhandled Rejection at", promise, "reason:", reason);
+});

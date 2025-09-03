@@ -21,4 +21,4 @@ const validatelogin = (data) => {
 
   return schema.validate(data);
 };
-export default { validateRegistration, validatelogin };
+export { validateRegistration, validatelogin };
